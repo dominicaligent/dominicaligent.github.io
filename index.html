@@ -58,7 +58,7 @@
 
 		if (enableForegroundNotification) {
 		    let notification = JSON.parse(payload.data.notification);
-		    debugger;
+		    console.log(notification);
 		    const notificationTitle = notification.title;
 		    const notificationOptions = {
 		        body: notification.body,

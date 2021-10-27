@@ -1,16 +1,77 @@
 <html>
-<head>
-    <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
-    <script>
-        window.OneSignal = window.OneSignal || [];
-        OneSignal.push(function() {
-            OneSignal.init({
-                appId: "87fc2cc3-e882-4f1d-8472-9199e1215db4",
-            });
-        });
-    </script>
-</head>
-<body>
-test
-</body>
+    <title>Firebase Messaging Demo</title>
+    <style>
+        div {
+            margin-bottom: 15px;
+        }
+    </style>
+    <body>
+        <div id="token"></div>
+        <div id="msg"></div>
+        <div id="notis"></div>
+        <div id="err"></div>
+        
+        <script src="https://www.gstatic.com/firebasejs/8.9.0/firebase-app.js"></script>
+
+	<script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-messaging.js"></script>
+	<script>
+	    MsgElem = document.getElementById('msg');
+	    TokenElem = document.getElementById('token');
+	    NotisElem = document.getElementById('notis');
+	    ErrElem = document.getElementById('err');
+
+	    // TODO: Replace firebaseConfig you get from Firebase Console
+	    var firebaseConfig = {
+		apiKey: "AIzaSyBZGeBMlUV6JaKNBRljp-MhGS2MNfHUcQk",
+		authDomain: "test-dominic.firebaseapp.com",
+		projectId: "test-dominic",
+		storageBucket: "test-dominic.appspot.com",
+		messagingSenderId: "91987202286",
+		appId: "1:91987202286:web:e7162b1c035eecf8ce23ff",
+		measurementId: "G-JDDNNFBQWF"
+	    };
+	    firebase.initializeApp(firebaseConfig);
+
+	    const messaging = firebase.messaging();
+	    messaging
+		.requestPermission()
+		.then(function () {
+		    MsgElem.innerHTML = 'Notification permission granted.';
+		    console.log('Notification permission granted.');
+
+		    // get the token in the form of promise
+		    return messaging.getToken();
+		})
+		.then(function (token) {
+		    TokenElem.innerHTML = 'Device token is : <br>' + token;
+		})
+		.catch(function (err) {
+		    ErrElem.innerHTML = ErrElem.innerHTML + '; ' + err;
+		    console.log('Unable to get permission to notify.', err);
+		});
+
+	    let enableForegroundNotification = true;
+	    messaging.onMessage(function (payload) {
+		console.log('Message received. ', payload);
+		NotisElem.innerHTML =
+		    NotisElem.innerHTML + JSON.stringify(payload);
+
+		if (enableForegroundNotification) {
+		    let notification = JSON.parse(payload.data.notification);
+		    const notificationTitle = notification.title;
+		    const notificationOptions = {
+		        body: notification.body,
+		        icon: notification.icon,
+		        image: notification.image
+
+		    };
+		    navigator.serviceWorker
+		        .getRegistrations()
+		        .then((registration) => {
+		            registration[0].showNotification(notificationTitle, notificationOptions);
+		        });
+		}
+	    });
+	</script>
+    </body>
 </html>

@@ -57,7 +57,7 @@
 		    NotisElem.innerHTML + JSON.stringify(payload);
 
 		if (enableForegroundNotification) {
-		    let notification = JSON.parse(payload.data.notification);
+		    let notification = JSON.parse(payload.data);
 		    console.log(notification);
 		    const notificationTitle = notification.title;
 		    const notificationOptions = {

@@ -57,13 +57,11 @@
 		    NotisElem.innerHTML + JSON.stringify(payload);
 
 		if (enableForegroundNotification) {
-		    let notification = JSON.parse(payload.data);
-		    console.log(notification);
-		    const notificationTitle = notification.title;
+		    const notificationTitle = 'Title';
 		    const notificationOptions = {
-		        body: notification.body,
-		        icon: notification.icon,
-		        image: notification.image
+		        body: 'Test Dominic',
+		        icon: 'https://image.shutterstock.com/image-photo/sample-wood-chipboard-wooden-laminate-600w-1343662607.jpg',
+		        image: 'https://image.shutterstock.com/image-vector/sample-stamp-grunge-texture-vector-600w-1389188327.jpg'
 
 		    };
 		    console.log(notificationTitle);

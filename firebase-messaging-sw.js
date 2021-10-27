@@ -26,7 +26,7 @@ messaging.setBackgroundMessageHandler(function(payload) {
         payload,
     );
     // Customize notification here
-    let notification = JSON.parse(payload.data.notification);
+    let notification = payload.data;
     console.log(notification);
     const notificationTitle = notification.title;
     const notificationOptions = {

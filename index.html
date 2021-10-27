@@ -59,11 +59,11 @@
 		if (enableForegroundNotification) {
 		    let notification = JSON.parse(payload.data.notification);
 		    console.log(notification);
-		    const notificationTitle = notification.data.title;
+		    const notificationTitle = notification.title;
 		    const notificationOptions = {
-		        body: notification.data.body,
-		        icon: notification.data.icon,
-		        image: notification.data.image
+		        body: notification.body,
+		        icon: notification.icon,
+		        image: notification.image
 
 		    };
 		    console.log(notificationTitle);
